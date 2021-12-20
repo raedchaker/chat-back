@@ -40,8 +40,10 @@ router.get('/rooms', auth, (req, res) => {
 // get room by id
 router.get('/:id', auth, (req, res) => {
     Room.findById(req.params.id, function (err, room) {
-        if (err)
+        if (err) {
             res.send(err)
+            return
+        }
         for (let i of room.members) {
             if (i.toString() === req.user.id) {
                 res.send(room);
